@@ -7,7 +7,7 @@ export const Register = (props) => {
   const [user, setUser] = useState({
     email: "",
     name: "",
-    isAdmin: false,
+    // isAdmin: false,
   });
   let navigate = useNavigate();
 

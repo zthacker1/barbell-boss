@@ -1,9 +1,10 @@
 import "./Workout.css";
-import { deleteWorkout } from "../../services/workoutService";
+import { deleteWorkout, getWorkoutTypes } from "../../services/workoutService";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export const Workout = ({ workout, currentUser, getAndSetAllWorkouts }) => {
-  // const [workoutTypes, setWorkoutTypes] = useState([]);
+  const [workoutTypes, setWorkoutTypes] = useState([]);
 
   const navigate = useNavigate();
 
@@ -13,6 +14,23 @@ export const Workout = ({ workout, currentUser, getAndSetAllWorkouts }) => {
     });
   };
 
+  const getAndSetAllWorkoutTypes = () => {
+    getWorkoutTypes().then((workoutTypesArray) =>
+      setWorkoutTypes(workoutTypesArray)
+    );
+  };
+
+  useEffect(() => {
+    getAndSetAllWorkoutTypes();
+  }, []);
+
+  const matchingWorkoutType = workoutTypes.find(
+    (workoutType) => parseInt(workoutType.id) === parseInt(workout.typeId)
+  );
+
+  const workoutTypeName = () =>
+    matchingWorkoutType ? matchingWorkoutType.name : "Unknown Type";
+
   return (
     <section className="workouts-container" key={workout.id}>
       <header>
@@ -20,7 +38,7 @@ export const Workout = ({ workout, currentUser, getAndSetAllWorkouts }) => {
           <u>{workout.name}</u>
         </b>
         <div>Date: {workout.date}</div>
-        <div>Type:{workout.typeId}</div>
+        <div>Type:{workoutTypeName()}</div>
       </header>
       <footer>
         <div>{workout.description}</div>

@@ -47,7 +47,7 @@ export const getWorkoutTypesById = (workoutTypeId) => {
 };
 
 export const workoutTypes = [
-  { id: 1, name: "Power" },
-  { id: 2, name: "Endurance" },
-  { id: 3, name: "Drill" },
+  { id: 1, name: "Power", label: "Power" },
+  { id: 2, name: "Volume", label: "Volume" },
+  { id: 3, name: "Cardio", label: "Cardio" },
 ];

@@ -4,7 +4,6 @@ import { AdminNavbar } from "../components/navbar/AdminNavbar";
 import { Welcome } from "../components/welcome/Welcome";
 import { WorkoutList } from "../components/workout/WorkoutList";
 import { Profile } from "../components/user/Profile";
-import { useEffect, useState } from "react";
 import { EditWorkoutForm } from "../components/forms/EditWorkoutForm";
 
 export const AdminView = ({ workouts, currentUser }) => {
@@ -44,6 +43,12 @@ export const AdminView = ({ workouts, currentUser }) => {
             element={<Profile currentUser={currentUser} workouts={workouts} />}
           />
         </Route>
+        {/* <Route path="users">
+          <Route
+            index
+            element={<UserList currentUser={currentUser} workouts={workouts} />}
+          />
+        </Route> */}
       </Route>
     </Routes>
   );

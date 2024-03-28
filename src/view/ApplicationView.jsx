@@ -24,7 +24,7 @@ export const ApplicationView = () => {
     getAndSetAllWorkouts();
   }, []);
 
-  return currentUser.isAdmin === "true" ? (
+  return currentUser.isAdmin === true ? (
     <AdminView currentUser={currentUser} workouts={workouts} />
   ) : (
     <UserView currentUser={currentUser} workouts={workouts} />

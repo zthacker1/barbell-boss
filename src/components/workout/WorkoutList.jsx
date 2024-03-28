@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 export const WorkoutList = ({ currentUser }) => {
   const [workouts, setWorkouts] = useState([]);
-  //   const [workoutTypes, setWorkoutTypes] = useState([]);
 
   const navigate = useNavigate();
 
@@ -19,16 +18,6 @@ export const WorkoutList = ({ currentUser }) => {
   useEffect(() => {
     getAndSetAllWorkouts();
   }, []);
-
-  //   const getAndSetWorkoutTypes = () => {
-  //     getWorkoutTypes().then((workoutTypesArray) => {
-  //       setWorkoutTypes(workoutTypesArray);
-  //     });
-  //   };
-
-  //   useEffect(() => {
-  //     getAndSetWorkoutTypes();
-  //   }, [user]);
 
   return (
     <div className="workouts-container">
