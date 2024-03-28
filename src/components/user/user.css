@@ -1,0 +1,47 @@
+.user {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-container {
+    margin: 1rem 5rem 0rem 5rem;
+  }
+
+  .user-container > h2 {
+    margin-top: 0;
+  }
+
+  .user {
+    background-color: var(--white);
+    border: 1px solid var(--outline);
+    margin: 0.5rem 0;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  /* This targets all the child elements of the element with the .ticket class */
+  .user > * {
+    padding: 0.5rem;
+  }
+
+  .user-info {
+    color: var(--outline);
+    font-family: "Roboto", sans-serif;
+  }
+
+  /* This targets any footer element that is a child of an element with the .ticket class */
+  .user > footer {
+    display: flex;
+    border-top: 1px solid var(--outline);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* This targets any element that is a child of a footer that is a child of an element with the .ticket class */
+  .user > footer > * {
+    flex-basis: 22%;
+  }
+
+  .filter-btn {
+    margin-right: 2rem;
+  }

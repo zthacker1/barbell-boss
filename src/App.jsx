@@ -1,14 +1,26 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React, { Component, useEffect, useState } from "react";
 import "./App.css";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { ApplicationView } from "./view/ApplicationView";
+import { Authorized } from "./view/Authorized";
+import { Login } from "./components/auth/Login";
+import { Register } from "./components/auth/Register";
 
-function App() {
+export const App = () => {
   return (
-    <>
-      <h1>Barbell Boss</h1>
-    </>
-  );
-}
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
+      <Route
+        path="*"
+        element={
+          <Authorized>
+            <ApplicationView />
+          </Authorized>
+        }
+      />
+    </Routes>
+  );
+};
 export default App;
