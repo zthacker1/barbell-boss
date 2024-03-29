@@ -45,14 +45,12 @@ export const CreateWorkoutForm = ({ currentUser }) => {
 
     const newErrors = {};
 
-    // Validate fields and populate errors object
     if (!workout.name) newErrors.name = "Name is required";
     if (!workout.date) newErrors.date = "date is required";
     if (!workout.typeId) newErrors.typeId = "typeId is required";
     if (!workout.description) newErrors.description = "description is required";
 
     if (Object.keys(newErrors).length > 0) {
-      // Found errors
       alert("fill out form");
     } else {
       console.log("Form submitted successfully:");

@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 export const UserList = ({ currentUser }) => {
   const [users, setUsers] = useState([]);
 
-  const navigate = useNavigate();
-
   const getAndSetAllUsers = () => {
     getUsers().then((usersArray) => {
       setUsers(usersArray);
@@ -21,14 +19,6 @@ export const UserList = ({ currentUser }) => {
   return (
     <div className="user-container">
       <h2>All Users</h2>
-      {/* <button
-        className="btn btn-secondary"
-        onClick={() => {
-          navigate("/workout/create");
-        }}
-      >
-        Create New Workout
-      </button> */}
       <article className="user">
         {users.map((user) => {
           return (
