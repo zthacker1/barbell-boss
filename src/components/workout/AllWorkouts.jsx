@@ -3,6 +3,7 @@ import "./Workout.css";
 import { useEffect, useState } from "react";
 import { getAllWorkouts } from "../../services/workoutService";
 import { useNavigate } from "react-router-dom";
+import { AllWorkoutsWorkout } from "./AllWorkoutsWorkout";
 
 export const AllWorkouts = ({ currentUser }) => {
   const [workouts, setWorkouts] = useState([]);
@@ -33,7 +34,7 @@ export const AllWorkouts = ({ currentUser }) => {
       <article className="workout">
         {workouts.map((workout) => {
           return (
-            <Workout
+            <AllWorkoutsWorkout
               workout={workout}
               key={workout.id}
               currentUser={currentUser}

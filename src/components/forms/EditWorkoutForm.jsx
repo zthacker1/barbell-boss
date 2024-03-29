@@ -9,8 +9,15 @@ import Select from "react-select";
 import "./Form.css";
 
 export const EditWorkoutForm = ({ workouts, currentUser }) => {
+  const [workoutToEdit, setWorkoutToEdit] = useState({
+    userId: parseInt(currentUser.id),
+    name: "",
+    date: "",
+    typeId: 0,
+    description: "",
+  });
   const [currentWorkout, setCurrentWorkout] = useState({
-    userId: currentUser.id,
+    userId: parseInt(currentUser.id),
     name: "",
     date: "",
     typeId: 0,
@@ -21,21 +28,21 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
   const { workoutId } = useParams();
   const str = workoutId;
 
-  const getAndSetWorkoutById = (str) =>
-    getWorkoutById().then(({ workoutObj }) => {
-      setCurrentWorkout(workoutObj);
+  const getAndSetWorkoutById = () => {
+    getWorkoutById(str).then((workoutTypesArray) => {
+      setWorkoutToEdit(workoutTypesArray);
+    });
+  };
 
-      useEffect(() => {
-        getAndSetWorkoutById();
-      });
-    }, []);
+  useEffect(() => {
+    getAndSetWorkoutById();
+  }, []);
 
   const handleSave = (event) => {
     event.preventDefault();
 
     const newErrors = {};
 
-    // Validate fields and populate errors object
     if (!currentWorkout.name) newErrors.name = "Name is required";
     if (!currentWorkout.date) newErrors.date = "date is required";
     if (!currentWorkout.typeId) newErrors.typeId = "typeId is required";
@@ -43,16 +50,13 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
       newErrors.description = "description is required";
 
     if (Object.keys(newErrors).length > 0) {
-      // Found errors
       alert("fill out form");
     } else {
       console.log("Form submitted successfully:");
-      // Proceed with form submission logic (e.g., API call)
-      // }
 
       const newWorkout = {
         id: str,
-        userId: currentUser.id,
+        userId: parseInt(currentUser.id),
         name: currentWorkout.name,
         typeId: currentWorkout.typeId,
         date: currentWorkout.date,
@@ -75,6 +79,13 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
     getAndSetWorkoutTypes();
   }, []);
 
+  const matchingWorkoutType = workoutTypes.find(
+    (workoutType) => parseInt(workoutType.id) === parseInt(workoutToEdit.typeId)
+  );
+
+  const workoutTypeName = () =>
+    matchingWorkoutType ? matchingWorkoutType.name : "Unknown Type";
+
   return (
     <form id="myForm">
       <h2>Edit Workout</h2>
@@ -84,7 +95,7 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="currentWorkout"
+            placeholder={workoutToEdit.name}
             onChange={(event) => {
               const workoutCopy = { ...currentWorkout };
               workoutCopy.name = event.target.value;
@@ -100,7 +111,7 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="DD/MM/YY"
+            placeholder={workoutToEdit.date}
             onChange={(event) => {
               const workoutCopy = { ...currentWorkout };
               workoutCopy.date = event.target.value;
@@ -116,7 +127,7 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
           <label>Edit Type</label>
           <Select
             options={workoutTypes}
-            placeholder="Select a workout type..."
+            placeholder={workoutTypeName()}
             onChange={(selectedOption) => {
               const workoutCopy = { ...currentWorkout };
               workoutCopy.typeId = selectedOption.id;
@@ -132,7 +143,7 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Enter description of workout"
+            placeholder={workoutToEdit.description}
             onChange={(event) => {
               const workoutCopy = { ...currentWorkout };
               workoutCopy.description = event.target.value;

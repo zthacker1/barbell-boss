@@ -3,7 +3,11 @@ import { deleteWorkout, getWorkoutTypes } from "../../services/workoutService";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export const Workout = ({ workout, currentUser, getAndSetAllWorkouts }) => {
+export const AllWorkoutsWorkout = ({
+  workout,
+  currentUser,
+  getAndSetAllWorkouts,
+}) => {
   const [workoutTypes, setWorkoutTypes] = useState([]);
 
   const navigate = useNavigate();
@@ -42,16 +46,6 @@ export const Workout = ({ workout, currentUser, getAndSetAllWorkouts }) => {
       </header>
       <footer>
         <div>Description: {workout.description}</div>
-        <div>
-          <button
-            className="btn-container"
-            onClick={() => {
-              navigate(`${workout.id}`);
-            }}
-          >
-            Edit
-          </button>
-        </div>
         <button className="btn btn-warning" onClick={handleDelete}>
           Delete
         </button>
