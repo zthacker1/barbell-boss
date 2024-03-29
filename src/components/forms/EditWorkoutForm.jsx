@@ -9,40 +9,60 @@ import Select from "react-select";
 import "./Form.css";
 
 export const EditWorkoutForm = ({ workouts, currentUser }) => {
-  const [workout, setWorkout] = useState({});
+  const [currentWorkout, setCurrentWorkout] = useState({
+    userId: currentUser.id,
+    name: "",
+    date: "",
+    typeId: 0,
+    description: "",
+  });
   const [workoutTypes, setWorkoutTypes] = useState([]);
   const navigate = useNavigate();
   const { workoutId } = useParams();
+  const str = workoutId;
 
-  //   useEffect(() => {
-  //     getWorkoutById(workoutId).then((data) => {
-  //       const workoutObj = data[0];
-  //       setWorkout(workoutObj);
-  //     });
-  //   }, [workoutId]);
+  const getAndSetWorkoutById = (str) =>
+    getWorkoutById().then(({ workoutObj }) => {
+      setCurrentWorkout(workoutObj);
 
-  useEffect(() => {
-    getWorkoutById(workoutId).then(({ workoutObj }) => {
-      setWorkout(workoutObj);
-    });
-  }, []);
+      useEffect(() => {
+        getAndSetWorkoutById();
+      });
+    }, []);
 
   const handleSave = (event) => {
     event.preventDefault();
 
-    const str = workoutId;
+    const newErrors = {};
 
-    const newWorkout = {
-      id: str,
-      //   userId: currentUser.id,
-      name: workout.name,
-      typeId: workout.typeId,
-      date: workout.date,
-      description: workout.description,
-    };
-    editWorkout(newWorkout).then(() => {
-      navigate("/workout");
-    });
+    // Validate fields and populate errors object
+    if (!currentWorkout.name) newErrors.name = "Name is required";
+    if (!currentWorkout.date) newErrors.date = "date is required";
+    if (!currentWorkout.typeId) newErrors.typeId = "typeId is required";
+    if (!currentWorkout.description)
+      newErrors.description = "description is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      // Found errors
+      alert("fill out form");
+    } else {
+      console.log("Form submitted successfully:");
+      // Proceed with form submission logic (e.g., API call)
+      // }
+
+      const newWorkout = {
+        id: str,
+        userId: currentUser.id,
+        name: currentWorkout.name,
+        typeId: currentWorkout.typeId,
+        date: currentWorkout.date,
+        description: currentWorkout.description,
+      };
+
+      editWorkout(newWorkout).then(() => {
+        navigate("/workout");
+      });
+    }
   };
 
   const getAndSetWorkoutTypes = () => {
@@ -56,7 +76,7 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
   }, []);
 
   return (
-    <form>
+    <form id="myForm">
       <h2>Edit Workout</h2>
       <fieldset>
         <div className="form-group">
@@ -64,12 +84,13 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="workout"
+            placeholder="currentWorkout"
             onChange={(event) => {
-              const workoutCopy = { ...workout };
+              const workoutCopy = { ...currentWorkout };
               workoutCopy.name = event.target.value;
-              setWorkout(workoutCopy);
+              setCurrentWorkout(workoutCopy);
             }}
+            required
           />
         </div>
       </fieldset>
@@ -81,10 +102,11 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
             className="form-control"
             placeholder="DD/MM/YY"
             onChange={(event) => {
-              const workoutCopy = { ...workout };
+              const workoutCopy = { ...currentWorkout };
               workoutCopy.date = event.target.value;
-              setWorkout(workoutCopy);
+              setCurrentWorkout(workoutCopy);
             }}
+            required
           />
         </div>
       </fieldset>
@@ -96,10 +118,11 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
             options={workoutTypes}
             placeholder="Select a workout type..."
             onChange={(selectedOption) => {
-              const workoutCopy = { ...workout };
+              const workoutCopy = { ...currentWorkout };
               workoutCopy.typeId = selectedOption.id;
-              setWorkout(workoutCopy);
+              setCurrentWorkout(workoutCopy);
             }}
+            required
           />
         </div>
       </fieldset>
@@ -111,16 +134,17 @@ export const EditWorkoutForm = ({ workouts, currentUser }) => {
             className="form-control"
             placeholder="Enter description of workout"
             onChange={(event) => {
-              const workoutCopy = { ...workout };
+              const workoutCopy = { ...currentWorkout };
               workoutCopy.description = event.target.value;
-              setWorkout(workoutCopy);
+              setCurrentWorkout(workoutCopy);
             }}
+            required
           />
         </div>
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <button className="form-btn btn-info" onClick={handleSave}>
+          <button type="submit" onClick={handleSave}>
             Submit
           </button>
         </div>

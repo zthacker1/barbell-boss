@@ -38,10 +38,10 @@ export const Workout = ({ workout, currentUser, getAndSetAllWorkouts }) => {
           <u>{workout.name}</u>
         </b>
         <div>Date: {workout.date}</div>
-        <div>Type:{workoutTypeName()}</div>
+        <div>Type: {workoutTypeName()}</div>
       </header>
       <footer>
-        <div>{workout.description}</div>
+        <div>Description: {workout.description}</div>
         <button
           className="btn-container"
           onClick={() => {

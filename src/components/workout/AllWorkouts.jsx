@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getAllWorkouts } from "../../services/workoutService";
 import { useNavigate } from "react-router-dom";
 
-export const WorkoutList = ({ currentUser }) => {
+export const AllWorkouts = ({ currentUser }) => {
   const [workouts, setWorkouts] = useState([]);
 
   const navigate = useNavigate();
@@ -19,10 +19,6 @@ export const WorkoutList = ({ currentUser }) => {
     getAndSetAllWorkouts();
   }, []);
 
-  const filteredWorkouts = workouts.filter(
-    (workout) => workout.userId === parseInt(currentUser.id)
-  );
-
   return (
     <div className="workouts-container">
       <h2>Workouts</h2>
@@ -35,7 +31,7 @@ export const WorkoutList = ({ currentUser }) => {
         Create New Workout
       </button>
       <article className="workout">
-        {filteredWorkouts.map((workout) => {
+        {workouts.map((workout) => {
           return (
             <Workout
               workout={workout}

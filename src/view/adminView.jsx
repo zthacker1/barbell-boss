@@ -5,6 +5,8 @@ import { Welcome } from "../components/welcome/Welcome";
 import { WorkoutList } from "../components/workout/WorkoutList";
 import { Profile } from "../components/user/Profile";
 import { EditWorkoutForm } from "../components/forms/EditWorkoutForm";
+import { UserList } from "../components/user/UserList";
+import { AllWorkouts } from "../components/workout/AllWorkouts";
 
 export const AdminView = ({ workouts, currentUser }) => {
   return (
@@ -13,14 +15,14 @@ export const AdminView = ({ workouts, currentUser }) => {
         path="/"
         element={
           <>
-            <AdminNavbar currentUse={currentUser} />
+            <AdminNavbar currentUser={currentUser} />
             <Outlet />
           </>
         }
       >
         <Route index element={<Welcome />} />;
         <Route path="workout">
-          <Route index element={<WorkoutList currentUse={currentUser} />} />
+          <Route index element={<WorkoutList currentUser={currentUser} />} />
           <Route
             path=":workoutId"
             element={
@@ -43,12 +45,20 @@ export const AdminView = ({ workouts, currentUser }) => {
             element={<Profile currentUser={currentUser} workouts={workouts} />}
           />
         </Route>
-        {/* <Route path="users">
+        <Route path="user">
           <Route
             index
             element={<UserList currentUser={currentUser} workouts={workouts} />}
           />
-        </Route> */}
+        </Route>
+        <Route path="workouts">
+          <Route
+            index
+            element={
+              <AllWorkouts currentUser={currentUser} workouts={workouts} />
+            }
+          />
+        </Route>
       </Route>
     </Routes>
   );

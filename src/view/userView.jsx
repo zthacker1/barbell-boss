@@ -21,7 +21,7 @@ export const UserView = ({ workouts, currentUser }) => {
       >
         <Route index element={<Welcome />} />;
         <Route path="workout">
-          <Route index element={<WorkoutList currentUse={currentUser} />} />
+          <Route index element={<WorkoutList currentUser={currentUser} />} />
           <Route
             path=":workoutId"
             element={
