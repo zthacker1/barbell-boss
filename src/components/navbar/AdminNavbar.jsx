@@ -13,7 +13,10 @@ export const AdminNavbar = ({ currentUser }) => {
         <Link to="/workout">My Workouts</Link>
       </li>
       <li className="navbar-item">
-        <Link to="/users">All Users</Link>
+        <Link to="/user">All Users</Link>
+      </li>
+      <li className="navbar-item">
+        <Link to="/workouts">All Workouts</Link>
       </li>
       {localStorage.getItem("bbboss_user") ? (
         <li className="navbar-item navbar-logout">

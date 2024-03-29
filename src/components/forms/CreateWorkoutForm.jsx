@@ -12,8 +12,8 @@ import "./Form.css";
 export const CreateWorkoutForm = ({ currentUser }) => {
   const [workout, setWorkout] = useState({
     // userId: 0,
-    name: "",
     date: "",
+    name: "",
     description: "",
   });
   const [workoutTypes, setWorkoutTypes] = useState([]);
@@ -43,16 +43,31 @@ export const CreateWorkoutForm = ({ currentUser }) => {
   const handleSave = (event) => {
     event.preventDefault();
 
-    const newWorkout = {
-      userId: parseInt(currentUser.id),
-      name: workout.name,
-      date: workout.date,
-      typeId: parseInt(workout.typeId),
-      description: workout.description,
-    };
-    createWorkout(newWorkout).then(() => {
-      navigate("/workout");
-    });
+    const newErrors = {};
+
+    // Validate fields and populate errors object
+    if (!workout.name) newErrors.name = "Name is required";
+    if (!workout.date) newErrors.date = "date is required";
+    if (!workout.typeId) newErrors.typeId = "typeId is required";
+    if (!workout.description) newErrors.description = "description is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      // Found errors
+      alert("fill out form");
+    } else {
+      console.log("Form submitted successfully:");
+
+      const newWorkout = {
+        userId: parseInt(currentUser.id),
+        name: workout.name,
+        date: workout.date,
+        typeId: parseInt(workout.typeId),
+        description: workout.description,
+      };
+      createWorkout(newWorkout).then(() => {
+        navigate("/workout");
+      });
+    }
   };
 
   return (
